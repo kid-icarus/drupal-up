@@ -9,15 +9,14 @@ Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 class {'apache':
   mpm_module => 'prefork',
 }
-apache::mod { 'rewrite':  }
-apache::mod { 'php5':  }
+apache::mod { 'rewrite':  } apache::mod { 'php5':  }
 
-file {'/var/www/drupal':
+file {'/var/www/drupal/drupal':
   ensure => 'directory',
 } ->
 apache::vhost {'drupal':
   servername => 'drupal.dev',
-  docroot  => '/var/www/drupal',
+  docroot  => '/var/www/drupal/drupal',
   override => 'all',
   port          => 80
 }
@@ -35,9 +34,10 @@ mysql::db { 'drupaldb':
 } ->
 class {'php':} ->
 class {'drush':} ->
-exec{'drush dl drupal --drupal-project-rename --destination=/var/www':
-  creates => '/var/www/drupal/index.php'
-} ->
-exec {'drush site-install  --db-url=mysqli://drupal:drupalsql@localhost/drupaldb':
-  creates => '/var/www/drupal/index.php'
+exec{'drush dl -y drupal --drupal-project-rename --destination=/var/www/drupal':
+  creates => '/var/www/drupal/drupal/index.php'
+}
+exec {'drush site-install --account-pass=admindrupal --db-url=mysqli://drupal:drupalsql@localhost/drupaldb':
+  cwd => '/var/www/drupal/drupal',
+  unless => "mysql -u drupal -pdrupalsql -e 'show tables;' drupaldb |grep ''"
 }
