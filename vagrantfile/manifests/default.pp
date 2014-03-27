@@ -36,8 +36,8 @@ class {'php':} ->
 class {'drush':} ->
 exec{'drush dl -y drupal --drupal-project-rename --destination=/var/www/drupal':
   creates => '/var/www/drupal/drupal/index.php'
-}
-exec {'drush site-install --account-pass=admindrupal --db-url=mysqli://drupal:drupalsql@localhost/drupaldb':
+} ->
+exec {'drush site-install -y --account-pass=admindrupal --db-url=mysqli://drupal:drupalsql@localhost/drupaldb':
   cwd => '/var/www/drupal/drupal',
   unless => "mysql -u drupal -pdrupalsql -e 'show tables;' drupaldb |grep ''"
 }
