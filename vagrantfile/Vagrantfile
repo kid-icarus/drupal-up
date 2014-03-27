@@ -13,10 +13,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Must have nfsd support, mac has this, but on Ubuntu just run:
   # apt-get install nfs-kernel-server portmap
-  config.vm.synced_folder "../project-docroot", "/var/www/project-docroot", type: 'nfs'
+  config.vm.synced_folder "../drupal", "/var/www/drupal", type: 'nfs'
 
    config.vm.provider "virtualbox" do |vb|
-     vb.name = 'ProjectName'
+     vb.name = 'DrupalBox'
    end
 
    # config.vm.provision = 'puppet'
