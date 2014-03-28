@@ -14,7 +14,8 @@ Provision a virtual machine to start using Drupal quickly.
 
  - The box will download and provision itself. It takes a while. Enjoy
    some of your favorite beverage
-   ヽ༼ຈل͜ຈ༽ﾉ
+
+ -  ヽ༼ຈل͜ຈ༽ﾉ
 
 ##Usage:
  - Access the site via navigating to http://drupal.dev/ in a browser.
