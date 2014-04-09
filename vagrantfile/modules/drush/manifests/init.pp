@@ -1,6 +1,8 @@
 class drush() {
   file {'/usr/share/drush':
     ensure => 'directory',
+    owner => 'vagrant',
+    group => 'vagrant',
     source => 'puppet:///modules/drush/drush',
     recurse => true,
   }
